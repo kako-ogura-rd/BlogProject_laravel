@@ -105,4 +105,28 @@ class BlogController extends Controller
         \Session::flash('err_msg','データが更新されました');
         return redirect(route('blogs'));
     }
+
+    /*
+     * ブログを削除する
+    * param int $id
+    * return
+    */
+    public function exeDelete($id)
+    {
+        if (empty($id))
+        {
+            \Session::flash('err_msg','データがありません');
+            return redirect(route('blogs'));
+        }
+
+        try {
+            Blog::destroy($id);
+        }catch (\Throwable $e)
+        {
+            abort(500);
+        }
+
+        \Session::flash('err_msg','削除しました');
+        return redirect(route('blogs'));
+    }
 }
